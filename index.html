@@ -1410,7 +1410,7 @@
           <div class="contact-item-icon">📧</div>
           <div class="contact-item-text">
             <span>Email</span>
-            <strong><a href="/cdn-cgi/l/email-protection#5b2f3e38333534363e3f323a2834372e383234353e281b3c363a323775383436" style="color:var(--text);text-decoration:none;"><span class="__cf_email__" data-cfemail="daaebfb9b2b4b5b7bfbeb3bba9b5b6afb9b3b5b4bfa99abdb7bbb3b6f4b9b5b7">[email&#160;protected]</span></a></strong>
+            <strong><a id="emailLink" href="#" style="color:var(--text);text-decoration:none;">technomediasoluciones@gmail.com</a></strong>
           </div>
         </div>
         <div class="contact-item">
@@ -1533,6 +1533,12 @@
       }
     });
   });
+
+  // Set email link dynamically
+  const emailLink = document.getElementById('emailLink');
+  const e = 'technomediasoluciones' + '@' + 'gmail.com';
+  emailLink.href = 'mailto:' + e;
+  emailLink.textContent = e;
 
   // Form submit con Formspree
   const form = document.getElementById('contactForm');
