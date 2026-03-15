@@ -1410,7 +1410,7 @@
           <div class="contact-item-icon">📧</div>
           <div class="contact-item-text">
             <span>Email</span>
-            <strong><a href="mailto:technomediasoluciones@gmail.com" style="color:var(--text);text-decoration:none;">technomediasoluciones@gmail.com</a></strong>
+            <strong><a href="/cdn-cgi/l/email-protection#5b2f3e38333534363e3f323a2834372e383234353e281b3c363a323775383436" style="color:var(--text);text-decoration:none;"><span class="__cf_email__" data-cfemail="daaebfb9b2b4b5b7bfbeb3bba9b5b6afb9b3b5b4bfa99abdb7bbb3b6f4b9b5b7">[email&#160;protected]</span></a></strong>
           </div>
         </div>
         <div class="contact-item">
@@ -1430,24 +1430,24 @@
       </div>
     </div>
 
-    <div class="contact-form reveal">
+    <form class="contact-form reveal" action="https://formspree.io/f/mlgpwvze" method="POST" id="contactForm">
       <div class="form-row">
         <div class="form-group">
           <label>Nombre</label>
-          <input type="text" placeholder="Tu nombre">
+          <input type="text" name="nombre" placeholder="Tu nombre" required>
         </div>
         <div class="form-group">
           <label>Empresa</label>
-          <input type="text" placeholder="Tu empresa">
+          <input type="text" name="empresa" placeholder="Tu empresa">
         </div>
       </div>
       <div class="form-group">
         <label>Email</label>
-        <input type="email" placeholder="tu@empresa.com">
+        <input type="email" name="email" placeholder="tu@empresa.com" required>
       </div>
       <div class="form-group">
         <label>Servicio de Interés</label>
-        <select>
+        <select name="servicio">
           <option value="">Selecciona un servicio...</option>
           <option>Desarrollo de Software</option>
           <option>Infraestructura en la Nube</option>
@@ -1455,14 +1455,15 @@
           <option>Inteligencia Artificial</option>
           <option>Business Intelligence</option>
           <option>Soporte IT</option>
+          <option>Rescate de Negocio</option>
         </select>
       </div>
       <div class="form-group">
         <label>Mensaje</label>
-        <textarea placeholder="Cuéntanos sobre tu proyecto o necesidad..."></textarea>
+        <textarea name="mensaje" placeholder="Cuéntanos sobre tu proyecto o necesidad..." required></textarea>
       </div>
-      <button class="btn-submit">Enviar Mensaje →</button>
-    </div>
+      <button type="submit" class="btn-submit" id="submitBtn">Enviar Mensaje →</button>
+    </form>
   </div>
 </section>
 
@@ -1491,7 +1492,7 @@
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // Scroll reveal — fires immediately for elements already in view on load
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
@@ -1533,15 +1534,40 @@
     });
   });
 
-  // Form submit
-  document.querySelector('.btn-submit').addEventListener('click', () => {
-    const btn = document.querySelector('.btn-submit');
-    btn.textContent = '✓ Mensaje Enviado';
-    btn.style.background = 'linear-gradient(135deg, var(--green-dark), var(--green))';
-    setTimeout(() => {
-      btn.textContent = 'Enviar Mensaje →';
-      btn.style.background = '';
-    }, 3000);
+  // Form submit con Formspree
+  const form = document.getElementById('contactForm');
+  const submitBtn = document.getElementById('submitBtn');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    submitBtn.textContent = 'Enviando...';
+    submitBtn.disabled = true;
+
+    const data = new FormData(form);
+    const response = await fetch(form.action, {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (response.ok) {
+      submitBtn.textContent = '✓ Mensaje Enviado';
+      submitBtn.style.background = 'linear-gradient(135deg, var(--green-dark), var(--green))';
+      form.reset();
+      setTimeout(() => {
+        submitBtn.textContent = 'Enviar Mensaje →';
+        submitBtn.style.background = '';
+        submitBtn.disabled = false;
+      }, 4000);
+    } else {
+      submitBtn.textContent = 'Error — Intenta de nuevo';
+      submitBtn.style.background = 'linear-gradient(135deg, #8b0000, #cc0000)';
+      submitBtn.disabled = false;
+      setTimeout(() => {
+        submitBtn.textContent = 'Enviar Mensaje →';
+        submitBtn.style.background = '';
+      }, 3000);
+    }
   });
 </script>
 </body>
